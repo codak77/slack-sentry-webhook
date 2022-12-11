@@ -75,7 +75,7 @@ app.post("/webhook", async (req, res) => {
           : `Slow Page Load on ${project}: The request to load page exceeded 4 secs. Visit <${info.data.web_url}|Dashboard> to see full details.`,
       attachments: [
         {
-	  color: info.data.event.level == "error" ? "danger" : "good",
+	  color: info.action == "error" ? "danger" : "good",
           fields: [
 	    {
               title: "Project",
@@ -120,13 +120,13 @@ app.post("/webhook", async (req, res) => {
               type: "button",
               text: "View Incident",
               url: info.data.web_url,
-	      style: info.data.event.level == "error" ? "danger" : "good",
+	      style: info.action == "error" ? "danger" : "good",
             },
 	    {
               type: "button",
               text: "Acknowledge Incident",
               url: info.data.web_url,
-	      style: info.data.event.level == "error" ? "danger" : "good",
+	      style: info.action == "error" ? "danger" : "good",
             },
           ],
         },
@@ -136,17 +136,17 @@ app.post("/webhook", async (req, res) => {
 
   if (type == "error") {
     slackMessage = {
-      channel: "#team-certgo",
+      channel: "#devops",
       // pretext: `${info.data.description_title}`,
       username: "Certgo",
-      
+
       text: `An Error occured on ${project} . Visit <${info.data.error.web_url}|Dashboard> to see full details.`,
       attachments: [
         {
-	  color: info.data.event.level == "error" ? "danger" : "good",
+	  color: info.data.error.level == "error" ? "danger" : "good",
           fields: [
 	    {
-              title: "App",
+              title: "Project",
               value: "Certgo",
               short: true,
             },
@@ -199,13 +199,13 @@ app.post("/webhook", async (req, res) => {
               type: "button",
               text: "View Incident",
               url: info.data.error.web_url,
-	      style: info.data.event.level == "error" ? "danger" : "good",
+	      style: info.error.level == "error" ? "danger" : "good",
             },
 	    {
               type: "button",
               text: "Acknowledge Incident",
               url: info.data.error.web_url,
-	      style: info.data.event.level == "error" ? "danger" : "good",
+	      style: info.error.level == "error" ? "danger" : "good",
             },
           ],
         },
@@ -215,15 +215,15 @@ app.post("/webhook", async (req, res) => {
 
    if (type == "issue") {
     slackMessage = {
-      channel: "#team-certgo",
+      channel: "#devops",
       // pretext: `${info.data.description_title}`,
       username: "Certgo",
-      
+
       text: `An Error occured on ${project} . Visit <${info.data.issue.web_url}|Dashboard> to see full details.`,
       attachments: [
         {
+	  color: info.data.error.level == "error" ? "danger" : "good",
           fields: [
-	    color: info.data.event.level == "error" ? "danger" : "good",
             {
               title: "Status",
               value: info.data.issue.status,
@@ -278,13 +278,13 @@ app.post("/webhook", async (req, res) => {
               type: "button",
               text: "View Incident",
               url: info.data.issue.web_url,
-	      style: info.data.event.level == "error" ? "danger" : "good",
+	      style: info.error.level == "error" ? "danger" : "good",
             },
 	    {
               type: "button",
               text: "Acknowledge Incident",
               url: info.data.issue.web_url,
-	      style: info.data.event.level == "error" ? "danger" : "good",
+	      style: info.error.level == "error" ? "danger" : "good",
             },
           ],
         },
@@ -297,11 +297,11 @@ app.post("/webhook", async (req, res) => {
       channel: "#devops",
       // pretext: `${info.data.description_title}`,
       username: "Certgo",
-     
+
       text: `An Error occured on ${project} . Visit <${info.data.event.web_url}|Dashboard> to see full details.`,
       attachments: [
-	color: info.data.event.level == "error" ? "danger" : "good",
         {
+	  color: info.data.event.level == "error" ? "danger" : "good",
           fields: [
 	     {
               title: "App",
