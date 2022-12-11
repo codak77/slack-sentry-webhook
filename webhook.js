@@ -68,13 +68,14 @@ app.post("/webhook", async (req, res) => {
       channel: "#devops",
       // pretext: `${info.data.description_title}`,
       username: "Certgo",
-      color: info.action == "critical" ? "#ff0000" : "#00ff00",
+
       text:
         pro == "certgo-backend"
           ? `Slow Query Request on ${project}: The request to the API exceeded 5 secs. Visit <${info.data.web_url}|Dashboard> to see full details.`
           : `Slow Page Load on ${project}: The request to load page exceeded 4 secs. Visit <${info.data.web_url}|Dashboard> to see full details.`,
       attachments: [
         {
+	  color: info.data.event.level == "error" ? "danger" : "good",
           fields: [
 	    {
               title: "Project",
@@ -119,11 +120,13 @@ app.post("/webhook", async (req, res) => {
               type: "button",
               text: "View Incident",
               url: info.data.web_url,
+	      style: "primary",
             },
 	    {
               type: "button",
               text: "Acknowledge Incident",
               url: info.data.web_url,
+	      style: "primary",
             },
           ],
         },
@@ -136,10 +139,11 @@ app.post("/webhook", async (req, res) => {
       channel: "#team-certgo",
       // pretext: `${info.data.description_title}`,
       username: "Certgo",
-      color: info.data.error.level == "error" ? "#ff0000" : "#00ff00",
+      
       text: `An Error occured on ${project} . Visit <${info.data.error.web_url}|Dashboard> to see full details.`,
       attachments: [
         {
+	  color: info.data.event.level == "error" ? "danger" : "good",
           fields: [
 	    {
               title: "App",
@@ -212,11 +216,12 @@ app.post("/webhook", async (req, res) => {
       channel: "#team-certgo",
       // pretext: `${info.data.description_title}`,
       username: "Certgo",
-      color: info.data.error.level == "error" ? "#ff0000" : "#00ff00",
+      
       text: `An Error occured on ${project} . Visit <${info.data.issue.web_url}|Dashboard> to see full details.`,
       attachments: [
         {
           fields: [
+	    color: info.data.event.level == "error" ? "danger" : "good",
             {
               title: "Status",
               value: info.data.issue.status,
@@ -288,9 +293,10 @@ app.post("/webhook", async (req, res) => {
       channel: "#devops",
       // pretext: `${info.data.description_title}`,
       username: "Certgo",
-      color: info.data.event.level == "error" ? "#ff0000" : "#00ff00",
+     
       text: `An Error occured on ${project} . Visit <${info.data.event.web_url}|Dashboard> to see full details.`,
       attachments: [
+	color: info.data.event.level == "error" ? "danger" : "good",
         {
           fields: [
 	     {
